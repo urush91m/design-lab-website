@@ -82,3 +82,34 @@ if (form) {
     }
   });
 }
+
+// Services tabs (Photography / Videography / Content & Brand)
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.service-panel');
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.getAttribute('data-tab');
+
+    tabButtons.forEach(b => {
+      const active = b === btn;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-selected', String(active));
+      b.tabIndex = active ? 0 : -1;
+    });
+
+    tabPanels.forEach(panel => {
+      const show = panel.id === `panel-${target}`;
+      panel.hidden = !show;
+    });
+  });
+
+  // Keyboard support: left/right arrows move between tabs
+  btn.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const list = Array.from(tabButtons);
+    const i = list.indexOf(btn);
+    const next = e.key === 'ArrowRight' ? (i + 1) % list.length : (i - 1 + list.length) % list.length;
+    list[next].focus();
+    list[next].click();
+  });
+});
