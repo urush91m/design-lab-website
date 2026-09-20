@@ -82,9 +82,14 @@
       <h2 class="reveal">What we shoot</h2>
       <p class="section-lede reveal">Custom photo and video packages built around your requirements.</p>
 
-      <div class="service-columns">
-        <div class="service-group reveal">
-          <h3>Photography</h3>
+      <div class="service-tabs reveal" role="tablist" aria-label="Service categories">
+        <button class="tab-btn is-active" role="tab" id="tab-photography" aria-controls="panel-photography" aria-selected="true" data-tab="photography">Photography</button>
+        <button class="tab-btn" role="tab" id="tab-videography" aria-controls="panel-videography" aria-selected="false" tabindex="-1" data-tab="videography">Videography</button>
+        <button class="tab-btn" role="tab" id="tab-content" aria-controls="panel-content" aria-selected="false" tabindex="-1" data-tab="content">Content &amp; Brand</button>
+      </div>
+
+      <div class="service-panels reveal reveal-delay-1">
+        <div class="service-panel is-active" id="panel-photography" role="tabpanel" aria-labelledby="tab-photography">
           <ul class="service-list">
             <li>Portrait &amp; Lifestyle Photography</li>
             <li>Wedding Photography</li>
@@ -93,8 +98,7 @@
             <li>Product Photography</li>
           </ul>
         </div>
-        <div class="service-group reveal reveal-delay-1">
-          <h3>Videography</h3>
+        <div class="service-panel" id="panel-videography" role="tabpanel" aria-labelledby="tab-videography" hidden>
           <ul class="service-list">
             <li>Cinematic Wedding Films</li>
             <li>Event Videography</li>
@@ -102,8 +106,7 @@
             <li>YouTube Videos &amp; Vlogs</li>
           </ul>
         </div>
-        <div class="service-group reveal reveal-delay-2">
-          <h3>Content &amp; Brand</h3>
+        <div class="service-panel" id="panel-content" role="tabpanel" aria-labelledby="tab-content" hidden>
           <ul class="service-list">
             <li>Instagram Reels &amp; Short-Form Content</li>
             <li>Brand &amp; Social Media Content</li>
