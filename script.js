@@ -27,6 +27,32 @@ if (navToggle) {
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Scroll-reveal animations
+const revealEls = document.querySelectorAll('.reveal');
+const heroReveals = document.querySelectorAll('.hero .reveal');
+const otherReveals = document.querySelectorAll('.reveal:not(.hero .reveal)');
+
+// Hero content animates in as soon as the page loads
+requestAnimationFrame(() => {
+  heroReveals.forEach(el => el.classList.add('is-visible'));
+});
+
+// Everything else animates in as it scrolls into view
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  otherReveals.forEach(el => observer.observe(el));
+} else {
+  // Fallback: no IntersectionObserver support, just show everything
+  revealEls.forEach(el => el.classList.add('is-visible'));
+}
+
 // Contact form: friendly submit feedback (works once Formspree endpoint is set)
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
