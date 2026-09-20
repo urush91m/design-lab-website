@@ -28,9 +28,9 @@ const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Scroll-reveal animations
-const revealEls = document.querySelectorAll('.reveal');
-const heroReveals = document.querySelectorAll('.hero .reveal');
-const otherReveals = document.querySelectorAll('.reveal:not(.hero .reveal)');
+const allReveals = Array.from(document.querySelectorAll('.reveal'));
+const heroReveals = allReveals.filter(el => el.closest('.hero'));
+const otherReveals = allReveals.filter(el => !el.closest('.hero'));
 
 // Hero content animates in as soon as the page loads
 requestAnimationFrame(() => {
@@ -50,7 +50,7 @@ if ('IntersectionObserver' in window) {
   otherReveals.forEach(el => observer.observe(el));
 } else {
   // Fallback: no IntersectionObserver support, just show everything
-  revealEls.forEach(el => el.classList.add('is-visible'));
+  allReveals.forEach(el => el.classList.add('is-visible'));
 }
 
 // Contact form: friendly submit feedback (works once Formspree endpoint is set)
