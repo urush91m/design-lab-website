@@ -165,7 +165,10 @@ ul{ list-style:none; margin:0; padding:0; }
 .hero{
   min-height: 100vh;
   display:flex; align-items:center;
-  background: radial-gradient(120% 90% at 15% 10%, #3B0A10 0%, var(--ink) 55%, #05020A 100%);
+  background:
+    radial-gradient(90% 70% at 12% 8%, rgba(174,9,23,0.22) 0%, transparent 55%),
+    radial-gradient(70% 60% at 90% 90%, rgba(174,9,23,0.12) 0%, transparent 60%),
+    #0E0A0B;
   color: var(--cream);
   padding-top: 76px;
 }
