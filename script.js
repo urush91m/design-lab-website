@@ -1,84 +1,210 @@
-// Header background swap on scroll
-const header = document.getElementById('site-header');
-const onScroll = () => {
-  if (window.scrollY > 40) header.classList.add('scrolled');
-  else header.classList.remove('scrolled');
-};
-window.addEventListener('scroll', onScroll);
-onScroll();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Lab — Your Story. Our Lens.</title>
+<meta name="description" content="Design Lab is a photography and videography studio creating cinematic, authentic visuals for individuals, brands, and events across India and internationally.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-// Mobile nav toggle
-const navToggle = document.getElementById('navToggle');
-const mainNav = document.querySelector('.main-nav');
-if (navToggle) {
-  navToggle.addEventListener('click', () => {
-    const isOpen = mainNav.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-  mainNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mainNav.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="wordmark">Design Lab</a>
+    <nav class="main-nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#portfolio">Work</a>
+      <a href="#contact" class="nav-cta">Contact us</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
-// Footer year
-const yearEl = document.getElementById('year');
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+<main id="top">
 
-// Scroll-reveal animations
-const allReveals = Array.from(document.querySelectorAll('.reveal'));
-const heroReveals = allReveals.filter(el => el.closest('.hero'));
-const otherReveals = allReveals.filter(el => !el.closest('.hero'));
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hero-kicker reveal">Photography &amp; Videography, online-first</p>
+        <h1 class="hero-title reveal reveal-delay-1">Your story.<br>Our lens.</h1>
+        <p class="hero-sub reveal reveal-delay-2">Design Lab makes cinematic, authentic visuals for people, brands, and moments worth remembering — weddings, events, products, and content, wherever your project takes us.</p>
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="#contact" class="btn btn-primary">Start your project</a>
+          <a href="#portfolio" class="btn btn-ghost">See the work</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal reveal-delay-2" aria-hidden="true">
+        <svg class="aperture" viewBox="0 0 400 400" fill="none">
+          <circle cx="200" cy="200" r="196" class="aperture-ring"/>
+          <g class="aperture-blades">
+            <path d="M200 40 L260 130 L200 200 L165 120 Z"/>
+            <path d="M340 130 L300 230 L200 200 L295 145 Z"/>
+            <path d="M330 300 L220 270 L200 200 L320 220 Z"/>
+            <path d="M150 350 L155 240 L200 200 L215 335 Z"/>
+            <path d="M40 260 L130 200 L200 200 L85 315 Z"/>
+            <path d="M60 100 L170 145 L200 200 L75 195 Z"/>
+          </g>
+          <circle cx="200" cy="200" r="34" class="aperture-eye"/>
+        </svg>
+      </div>
+    </div>
+  </section>
 
-// Hero content animates in as soon as the page loads
-requestAnimationFrame(() => {
-  heroReveals.forEach(el => el.classList.add('is-visible'));
-});
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-frame reveal" aria-hidden="true">
+        <div class="frame-strip">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="about-copy reveal reveal-delay-1">
+        <h2>Built to capture moments beautifully</h2>
+        <p>Design Lab is a photography and videography service brand providing high-quality visual solutions for individuals, events, and brands. We work across lifestyle photography, portraits, product shoots, weddings, corporate events, private events, and other special occasions.</p>
+        <p>We combine creative direction, visual storytelling, photography, and videography to create content that feels aesthetic, authentic, cinematic, and tailored to each client's vision — whether that's an intimate portrait session or a full brand campaign.</p>
+        <p class="about-note">Design Lab currently operates online-first, with no physical studio for walk-in bookings. Clients discover our work on Instagram, share their requirements, and book directly — we work with clients across India and internationally.</p>
+      </div>
+    </div>
+  </section>
 
-// Everything else animates in as it scrolls into view
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-  otherReveals.forEach(el => observer.observe(el));
-} else {
-  // Fallback: no IntersectionObserver support, just show everything
-  allReveals.forEach(el => el.classList.add('is-visible'));
-}
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <h2 class="reveal">What we shoot</h2>
+      <p class="section-lede reveal">Custom photo and video packages built around your requirements.</p>
 
-// Contact form: friendly submit feedback (works once Formspree endpoint is set)
-const form = document.getElementById('contactForm');
-const note = document.getElementById('formNote');
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    if (form.action.includes('YOUR_FORM_ID')) {
-      e.preventDefault();
-      note.textContent = 'Connect a Formspree form ID in index.html to enable this form (see README).';
-      return;
-    }
-    e.preventDefault();
-    note.textContent = 'Sending…';
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' }
-      });
-      if (res.ok) {
-        note.textContent = 'Thanks — your project details are in. We\'ll be in touch soon.';
-        form.reset();
-      } else {
-        note.textContent = 'Something went wrong. Please try again or reach out on Instagram.';
-      }
-    } catch (err) {
-      note.textContent = 'Something went wrong. Please try again or reach out on Instagram.';
-    }
-  });
-}
+      <div class="service-columns">
+        <div class="service-group reveal">
+          <h3>Photography</h3>
+          <ul class="service-list">
+            <li>Portrait &amp; Lifestyle Photography</li>
+            <li>Wedding Photography</li>
+            <li>Event Photography &amp; Coverage</li>
+            <li>Corporate Event Coverage</li>
+            <li>Product Photography</li>
+          </ul>
+        </div>
+        <div class="service-group reveal reveal-delay-1">
+          <h3>Videography</h3>
+          <ul class="service-list">
+            <li>Cinematic Wedding Films</li>
+            <li>Event Videography</li>
+            <li>Product Videography</li>
+            <li>YouTube Videos &amp; Vlogs</li>
+          </ul>
+        </div>
+        <div class="service-group reveal reveal-delay-2">
+          <h3>Content &amp; Brand</h3>
+          <ul class="service-list">
+            <li>Instagram Reels &amp; Short-Form Content</li>
+            <li>Brand &amp; Social Media Content</li>
+            <li>Customized Photo &amp; Video Packages</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <h2 class="reveal">How a project comes together</h2>
+      <ol class="process-steps">
+        <li class="reveal">
+          <span class="step-index">01</span>
+          <h3>Share your vision</h3>
+          <p>Tell us about your project, occasion, or brand through Instagram or our contact form — dates, location, and the look you're after.</p>
+        </li>
+        <li class="reveal reveal-delay-1">
+          <span class="step-index">02</span>
+          <h3>Get a custom package</h3>
+          <p>We put together a package suited to your requirements and budget, no matter where your project is taking place.</p>
+        </li>
+        <li class="reveal reveal-delay-2">
+          <span class="step-index">03</span>
+          <h3>We shoot &amp; deliver</h3>
+          <p>We capture the moment and deliver polished, ready-to-use photos and films — for keeping, sharing, or publishing.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio" id="portfolio">
+    <div class="wrap">
+      <h2 class="reveal">A sense of the work</h2>
+      <p class="section-lede reveal">Replace these placeholders with real shots from your portfolio — see the note in the code comments below.</p>
+      <!--
+        REPLACE ME: swap each .portfolio-tile div below for
+        <div class="portfolio-tile"><img src="assets/your-photo.jpg" alt="Description"></div>
+      -->
+      <div class="portfolio-grid">
+        <div class="portfolio-tile tile-a reveal" data-label="Weddings"></div>
+        <div class="portfolio-tile tile-b reveal reveal-delay-1" data-label="Portraits"></div>
+        <div class="portfolio-tile tile-c reveal reveal-delay-2" data-label="Products"></div>
+        <div class="portfolio-tile tile-d reveal reveal-delay-1" data-label="Events"></div>
+        <div class="portfolio-tile tile-e reveal reveal-delay-2" data-label="Lifestyle"></div>
+        <div class="portfolio-tile tile-f reveal reveal-delay-3" data-label="Brand content"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy reveal">
+        <h2>Let's make it happen</h2>
+        <p>Have a project, event, or brand shoot in mind? Send over the details and we'll get back to you with next steps.</p>
+        <a class="instagram-link" href="https://instagram.com/" target="_blank" rel="noopener">Follow on Instagram →</a>
+      </div>
+      <form class="contact-form reveal reveal-delay-1" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label>
+          Name
+          <input type="text" name="name" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required>
+        </label>
+        <label>
+          Project type
+          <select name="project_type">
+            <option>Wedding</option>
+            <option>Corporate / Event</option>
+            <option>Portrait / Lifestyle</option>
+            <option>Product / Brand content</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>
+          Tell us about your project
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Send details</button>
+        <p class="form-note" id="formNote"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© <span id="year"></span> Design Lab</span>
+    <span>Online-first · India &amp; international</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
