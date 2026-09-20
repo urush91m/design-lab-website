@@ -165,15 +165,12 @@ ul{ list-style:none; margin:0; padding:0; }
 .hero{
   min-height: 100vh;
   display:flex; align-items:center;
-  background:
-    linear-gradient(100deg, rgba(15,4,5,0.92) 0%, rgba(15,4,5,0.72) 38%, rgba(15,4,5,0.32) 68%, rgba(15,4,5,0.15) 100%),
-    url('hero-bg.jpg') center 25% / cover no-repeat;
-  background-color: #0F0405;
+  background: radial-gradient(120% 90% at 15% 10%, #3B0A10 0%, var(--ink) 55%, #05020A 100%);
   color: var(--cream);
   padding-top: 76px;
 }
 .hero-grid{
-  display:block;
+  display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items:center;
 }
 .hero-copy{ max-width: 640px; }
 .hero-kicker{
@@ -188,13 +185,11 @@ ul{ list-style:none; margin:0; padding:0; }
   font-size: clamp(3rem, 6vw, 5.2rem);
   color: var(--cream);
   line-height: 1.02;
-  text-shadow: 0 2px 24px rgba(0,0,0,0.45);
 }
 .hero-sub{
   max-width: 46ch;
-  color: rgba(243,238,228,0.85);
+  color: rgba(243,238,228,0.78);
   font-size: 1.05rem;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.4);
 }
 .hero-actions{ display:flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
 .btn{
@@ -207,12 +202,21 @@ ul{ list-style:none; margin:0; padding:0; }
 .btn-ghost{ border: 1px solid rgba(255,255,255,0.4); color: var(--cream); }
 .btn-ghost:hover{ border-color: var(--cream); transform: translateY(-3px); }
 
-@media (max-width: 780px){
-  .hero{
-    background:
-      linear-gradient(180deg, rgba(15,4,5,0.55) 0%, rgba(15,4,5,0.78) 55%, rgba(15,4,5,0.95) 100%),
-      url('hero-bg.jpg') center 15% / cover no-repeat;
-  }
+.hero-visual{ display:flex; justify-content:center; }
+.hero-photo{
+  width: 100%; max-width: 420px; height: auto; /* full image, no cropping */
+  border-radius: 18px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 900px){
+  .hero-grid{ grid-template-columns: 1fr; text-align:center; }
+  .hero-copy{ max-width: none; margin: 0 auto; }
+  .hero-sub{ margin-left:auto; margin-right:auto; }
+  .hero-actions{ justify-content:center; }
+  .hero-visual{ order: -1; margin-bottom: 8px; }
+  .hero-photo{ max-width: 320px; }
 }
 
 /* ============ About ============ */
