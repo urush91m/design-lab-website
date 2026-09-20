@@ -40,6 +40,20 @@ ul{ list-style:none; margin:0; padding:0; }
   *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
 
+/* ============ Scroll reveal ============ */
+.reveal{
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible{ opacity: 1; transform: translateY(0); }
+.reveal-delay-1{ transition-delay: .12s; }
+.reveal-delay-2{ transition-delay: .24s; }
+.reveal-delay-3{ transition-delay: .36s; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
+
 /* ============ Header ============ */
 .site-header{
   position: fixed; top:0; left:0; right:0; z-index: 50;
@@ -63,14 +77,22 @@ ul{ list-style:none; margin:0; padding:0; }
 .hero .wordmark, .site-header:not(.scrolled) .wordmark{ color: var(--cream); }
 .main-nav{ display:flex; align-items:center; gap: 28px; font-size: 0.92rem; }
 .site-header:not(.scrolled) .main-nav a{ color: var(--cream); }
-.main-nav a{ color: var(--ink); opacity: .85; }
+.main-nav a:not(.nav-cta){ position: relative; }
+.main-nav a:not(.nav-cta)::after{
+  content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px;
+  background: currentColor; transition: width .25s ease;
+}
+.main-nav a:not(.nav-cta):hover::after{ width:100%; }
+.main-nav a{ color: var(--ink); opacity: .85; transition: opacity .2s ease; }
 .main-nav a:hover{ opacity: 1; }
 .nav-cta{
   border: 1px solid currentColor;
   padding: 8px 16px;
   border-radius: 999px;
   opacity: 1 !important;
+  transition: background .25s ease, color .25s ease;
 }
+.nav-cta:hover{ background: var(--gold); border-color: var(--gold); color: var(--ink) !important; }
 .nav-toggle{ display:none; }
 
 @media (max-width: 780px){
@@ -122,12 +144,13 @@ ul{ list-style:none; margin:0; padding:0; }
 .hero-actions{ display:flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
 .btn{
   display:inline-block; padding: 14px 26px; border-radius: 999px;
-  font-size: 0.95rem; font-weight: 500; transition: transform .2s ease, background .2s ease;
+  font-size: 0.95rem; font-weight: 500; transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
 }
 .btn-primary{ background: var(--gold); color: var(--ink); }
-.btn-primary:hover{ transform: translateY(-2px); }
+.btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(201,151,43,0.35); }
+.btn-primary:active{ transform: translateY(-1px); }
 .btn-ghost{ border: 1px solid rgba(243,238,228,0.4); color: var(--cream); }
-.btn-ghost:hover{ border-color: var(--cream); }
+.btn-ghost:hover{ border-color: var(--cream); transform: translateY(-3px); }
 
 .hero-visual{ display:flex; justify-content:center; }
 .aperture{ width: min(360px, 80vw); height:auto; }
@@ -149,7 +172,9 @@ ul{ list-style:none; margin:0; padding:0; }
 .frame-strip span{
   display:block; aspect-ratio: 4/3; border-radius: 4px;
   background: linear-gradient(135deg, var(--gold-deep), var(--ink) 120%);
+  transition: transform .35s ease;
 }
+.frame-strip span:hover{ transform: scale(1.03); }
 .frame-strip span:nth-child(2){ background: linear-gradient(135deg, var(--ink), var(--gold) 140%); margin-left: 18%; }
 .frame-strip span:nth-child(3){ background: linear-gradient(135deg, var(--gold), var(--ink-soft) 140%); }
 .frame-strip span:nth-child(4){ background: linear-gradient(135deg, var(--ink-soft), var(--gold-deep) 140%); margin-left: 18%; }
@@ -173,7 +198,9 @@ ul{ list-style:none; margin:0; padding:0; }
 .service-list li{
   padding: 12px 0; border-top: 1px solid var(--rule-dark);
   color: rgba(243,238,228,0.88); font-size: 0.98rem;
+  transition: padding-left .25s ease, color .25s ease;
 }
+.service-list li:hover{ padding-left: 10px; color: var(--gold); }
 .service-list li:last-child{ border-bottom: 1px solid var(--rule-dark); }
 
 /* ============ Process ============ */
@@ -201,7 +228,10 @@ ul{ list-style:none; margin:0; padding:0; }
   padding: 36px 28px;
   display:flex; flex-direction:column;
   background: #fff;
+  transition: transform .3s ease, box-shadow .3s ease;
 }
+.package-card:hover{ transform: translateY(-6px); box-shadow: 0 16px 28px rgba(20,18,15,0.12); }
+.package-card.featured:hover{ transform: translateY(-14px); }
 .package-card.featured{
   background: var(--ink); color: var(--cream);
   border-color: var(--ink);
@@ -229,13 +259,24 @@ ul{ list-style:none; margin:0; padding:0; }
 .portfolio-tile{
   position: relative; border-radius: 6px; overflow:hidden;
   display:flex; align-items:flex-end; padding: 18px;
+  transition: transform .35s ease, box-shadow .35s ease;
 }
+.portfolio-tile:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 32px rgba(20,18,15,0.25); }
+.portfolio-tile::before{
+  content:''; position:absolute; inset:0; z-index:0;
+  background: linear-gradient(to top, rgba(20,18,15,0.55), transparent 55%);
+}
+.portfolio-tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition: transform .5s ease; z-index:0; }
+.portfolio-tile:hover img{ transform: scale(1.08); }
 .portfolio-tile::after{
   content: attr(data-label);
   color: var(--cream);
   font-family: var(--font-display);
   font-size: 1.1rem;
+  position: relative; z-index: 1;
+  transition: transform .3s ease;
 }
+.portfolio-tile:hover::after{ transform: translateY(-4px); }
 .tile-a{ background: linear-gradient(160deg,#8A5A2A,#14120F 110%); grid-row: span 2; }
 .tile-b{ background: linear-gradient(160deg,#C9972B,#3A352E 110%); }
 .tile-c{ background: linear-gradient(160deg,#3A352E,#8A5A2A 110%); }
@@ -247,7 +288,8 @@ ul{ list-style:none; margin:0; padding:0; }
 .contact{ padding: 120px 0; }
 .contact-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; }
 .contact-copy p{ max-width: 40ch; }
-.instagram-link{ color: var(--gold-deep); font-weight: 500; }
+.instagram-link{ color: var(--gold-deep); font-weight: 500; display:inline-block; transition: transform .25s ease; }
+.instagram-link:hover{ transform: translateX(4px); }
 .contact-form{ display:flex; flex-direction:column; gap: 18px; }
 .contact-form label{ display:flex; flex-direction:column; gap: 8px; font-size: 0.9rem; color: var(--ink-soft); }
 .contact-form input, .contact-form select, .contact-form textarea{
