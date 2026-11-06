@@ -1,4 +1,4 @@
-/* ============ Tokens ============ */
+ /* ============ Tokens ============ */
 :root{
   --ink: #252629;            /* Charcoal Black */
   --ink-soft: #4B4C50;
@@ -218,16 +218,23 @@ ul{ list-style:none; margin:0; padding:0; }
 .banner-img{ position:absolute; inset:0; width:100%; height:100%; object-fit: cover; }
 .hero-banner::before{
   content:''; position:absolute; inset:0; z-index:1;
-  background: linear-gradient(90deg, rgba(37,38,41,0.88) 0%, rgba(37,38,41,0.6) 42%, rgba(37,38,41,0.05) 78%);
+  background: linear-gradient(90deg, rgba(37,38,41,0.92) 0%, rgba(37,38,41,0.72) 44%, rgba(37,38,41,0.08) 80%);
 }
 .banner-inner{ position: relative; z-index: 2; width: 100%; padding-top: 56px; padding-bottom: 56px; }
 .hero-copy{ max-width: 540px; text-align: left; color: #fff; }
 .hero-kicker{
-  font-family: var(--font-accent); font-style: italic; font-weight: 500;
-  color: var(--champagne); font-size: 1.6rem; letter-spacing: 0.01em; margin-bottom: 6px;
+  display: inline-block; max-width: 100%;
+  font-family: var(--font-accent); font-style: italic; font-weight: 600;
+  color: #F6E3B4; font-size: clamp(1.1rem, 4.4vw, 1.6rem); line-height: 1.25; letter-spacing: 0.01em;
+  padding: 8px 20px; margin: 0 0 16px;
+  background: rgba(37,38,41,0.66);
+  border: 1px solid rgba(216,183,122,0.6); border-radius: 22px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
+.hero-kicker .nowrap{ white-space: nowrap; }
 .hero-title{ font-size: clamp(3rem, 6.4vw, 5.4rem); color: #fff; line-height: 1.02; text-shadow: 0 2px 24px rgba(0,0,0,0.35); }
-.hero-sub{ max-width: 48ch; color: rgba(255,255,255,0.88); font-size: 0.98rem; }
+.hero-sub{ max-width: 48ch; color: rgba(255,255,255,0.92); font-size: 0.98rem; text-shadow: 0 1px 10px rgba(0,0,0,0.5); }
 .hero-actions{ display:flex; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
 .btn{
   display:inline-block; padding: 14px 28px; border-radius: 999px;
@@ -241,10 +248,9 @@ ul{ list-style:none; margin:0; padding:0; }
 .btn-ghost:hover{ border-color: var(--gold); transform: translateY(-3px); }
 
 @media (max-width: 780px){
-  .hero-banner{ min-height: 520px; align-items: flex-end; }
-  .hero-banner::before{ background: linear-gradient(180deg, rgba(37,38,41,0.1) 0%, rgba(37,38,41,0.55) 45%, rgba(37,38,41,0.93) 100%); }
+  .hero-banner{ min-height: 620px; align-items: flex-end; }
+  .hero-banner::before{ background: linear-gradient(180deg, rgba(37,38,41,0.3) 0%, rgba(37,38,41,0.7) 30%, rgba(37,38,41,0.9) 60%, rgba(37,38,41,0.95) 100%); }
   .banner-inner{ padding-top: 40px; padding-bottom: 44px; }
-  .hero-kicker{ font-size: 1.4rem; }
 }
 
 /* ============ Floating call + WhatsApp ============ */
@@ -257,7 +263,11 @@ ul{ list-style:none; margin:0; padding:0; }
 }
 .float-contact a:hover{ transform: translateX(-4px); background: var(--gold-deep); }
 .float-contact svg{ width: 26px; height: 26px; fill: currentColor; }
-@media (max-width: 560px){ .float-contact a{ width: 48px; height: 48px; } .float-contact svg{ width: 23px; height: 23px; } }
+@media (max-width: 560px){
+  .float-contact a{ width: 44px; height: 44px; }
+  .float-contact svg{ width: 21px; height: 21px; }
+  .hero-copy{ padding-right: 14px; }
+}
 
 /* ============ About ============ */
 .about{ padding: 120px 0; }
