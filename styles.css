@@ -509,3 +509,66 @@ ul{ list-style:none; margin:0; padding:0; }
   .portfolio-tile{ padding: 12px; }
   .portfolio-tile::after{ font-size: 1rem; padding: 6px 14px; white-space: nowrap; }
 }
+
+
+/* ============ Reference layout v2 (inspired by the Studio Clicks structure) ============ */
+.section-pill{
+  display:inline-block; background: var(--gold, #B0000A); color:#fff;
+  font-family: var(--font-body, "Montserrat", sans-serif); font-size: 0.76rem; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 10px 22px; border-radius: 4px; margin-bottom: 18px;
+}
+/* centred section headers, like the reference's "Offered Services" block */
+.services .wrap, .process .wrap, .portfolio .wrap{ text-align: center; }
+.services h2::after, .process h2::after, .portfolio h2::after{ margin-left: auto; margin-right: auto; }
+.section-lede{ margin-left: auto; margin-right: auto; }
+.service-tabs{ display:flex; width: fit-content; max-width: 100%; flex-wrap: wrap; justify-content: center; margin: 40px auto 0; }
+.service-panels{ margin-left: auto; margin-right: auto; text-align: left; }
+
+/* process steps as soft cards */
+.process-steps{ gap: 24px; }
+.process-steps li{
+  background: #FFFFFF; border: 1px solid rgba(37,38,41,0.08); border-radius: 22px;
+  padding: 34px 26px; box-shadow: 0 14px 38px rgba(37,38,41,0.07); text-align: center;
+}
+.process-steps p{ margin-left: auto; margin-right: auto; }
+
+/* rounder photo cards in About */
+.frame-strip span{ border-radius: 24px; }
+
+/* red contact + footer block */
+.contact{ background: var(--gold, #B0000A); color: #fff; padding: 88px 0 72px; overflow: visible; }
+.contact::before{ display: none; }
+.contact h2, .contact h3{ color: #fff; }
+.contact h2::after{ background: var(--champagne, #D8B77A); margin-left: 0; margin-right: 0; }
+.contact p{ color: rgba(255,255,255,0.9); }
+.contact-grid2{ display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: start; text-align: left; }
+.contact-grid2 .contact-copy{ max-width: 520px; }
+.contact-channels{ align-items: flex-start; flex-direction: column; gap: 18px; margin: 28px 0; }
+.contact-channels li{ flex-direction: row; align-items: center; gap: 16px; }
+.contact-channels li > div{ display:flex; flex-direction:column; }
+.ch-icon{ width: 46px; height: 46px; border-radius: 50%; background: #fff; color: var(--gold, #B0000A); display:grid; place-items:center; flex: none; }
+.ch-icon svg{ width: 22px; height: 22px; fill: currentColor; }
+.channel-label{ color: rgba(255,255,255,0.78); }
+.channel-link, .instagram-link{ color: #fff; font-size: 1.05rem; font-weight: 500; }
+.channel-link:hover, .instagram-link:hover{ color: #F6E3B4; }
+.btn-whatsapp{ background: #fff; color: var(--gold, #B0000A); }
+.btn-whatsapp:hover{ background: #F6E3B4; color: #80000A; box-shadow: 0 10px 24px rgba(0,0,0,0.25); }
+.footer-links h3{ font-size: 1.9rem; margin-bottom: 14px; }
+.footer-links ul{ list-style: none; margin: 0; padding: 0; }
+.footer-links li{ border-bottom: 1px solid rgba(255,255,255,0.24); }
+.footer-links a{ display:flex; align-items:center; gap: 12px; padding: 15px 2px; color: #fff; font-size: 0.98rem; transition: padding-left .25s ease, color .25s ease; }
+.footer-links a::before{ content: '\25C6'; color: var(--champagne, #D8B77A); font-size: 0.7rem; }
+.footer-links a:hover{ padding-left: 8px; color: #F6E3B4; }
+.site-footer{ background: #80000A; color: rgba(255,255,255,0.92); border-top: 0; }
+.footer-inner{ justify-content: center; text-align: center; gap: 6px 28px; }
+
+@media (max-width: 780px){
+  .wrap{ padding-left: 24px; padding-right: 24px; }
+  .about, .services, .process, .portfolio{ padding-top: 72px; padding-bottom: 72px; }
+  .contact{ padding: 64px 0 56px; }
+  .contact-grid2{ grid-template-columns: 1fr; gap: 40px; }
+  /* red square menu button, like the reference */
+  .nav-toggle{ width: 46px; height: 42px; align-items: center; background: var(--gold, #B0000A); border-radius: 8px; }
+  .nav-toggle span{ width: 22px; background: #fff; }
+}
