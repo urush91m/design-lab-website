@@ -5,14 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Design Lab — Your Story. Our Lens.</title>
 <meta name="description" content="Design Lab is a photography and videography studio creating cinematic, authentic visuals for individuals, brands, and events across India and internationally.">
-<script>document.documentElement.classList.add("js-reel");</script>
+<script>
+document.documentElement.classList.add("js-reel");
+/* Safety net: if script.js is missing or fails to run, show all content normally instead of leaving it hidden */
+window.setTimeout(function () {
+  if (!window.__dlReady) {
+    document.documentElement.classList.remove("js-reel");
+    document.documentElement.classList.add("no-script-fallback");
+  }
+}, 2500);
+</script>
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="logo.png?v=20261124">
+<link rel="icon" href="logo.png?v=20261125">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261124">
+<link rel="stylesheet" href="styles.css?v=20261125">
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -25,7 +34,7 @@
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a href="#top" class="wordmark"><img src="logo.png?v=20261124" alt="The Design Lab.inn" class="logo-img"></a>
+    <a href="#top" class="wordmark"><img src="logo.png?v=20261125" alt="The Design Lab.inn" class="logo-img"></a>
     <nav class="main-nav">
       <a href="#about">About</a>
       <a href="#services">Services</a>
@@ -235,6 +244,6 @@
   <a class="fc-call" href="tel:+919709299285" aria-label="Call Design Lab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></a>
 </div>
 
-<script src="script.js?v=20261124"></script>
+<script src="script.js?v=20261125"></script>
 </body>
 </html>
