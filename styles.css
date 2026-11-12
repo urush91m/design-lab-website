@@ -916,3 +916,7 @@ body.lb-lock{ overflow:hidden; }
 
 /* Work intro: a little wider and evenly balanced so it doesn't leave one word alone on a line */
 .portfolio .section-lede{ max-width: 64ch; text-wrap: balance; }
+
+/* Safety net: if the script cannot run, nothing stays hidden */
+.no-script-fallback .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+.no-script-fallback .scroll-progress{ display:none; }
