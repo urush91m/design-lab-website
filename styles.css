@@ -899,3 +899,21 @@ body.lb-lock{ overflow:hidden; }
   .btn-whatsapp::after, .service-panel .service-list li{ animation:none !important; }
   .reel-item::after{ display:none; }
 }
+
+/* ============ Banner photo: red desk flat-lay (portrait photo, framed per screen size) ============ */
+.banner-img{ object-position: 62% 72%; }                       /* wide/tablet strip: camera + lens */
+.hero-banner::before{
+  background: linear-gradient(90deg, rgba(37,38,41,.82) 0%, rgba(37,38,41,.58) 48%, rgba(37,38,41,.22) 100%);
+}
+@media (min-width: 1024px){
+  .js-reel .banner-img{ object-position: 55% 66%; }
+  .js-reel .hero-banner::before{
+    background: linear-gradient(100deg, rgba(37,38,41,.86) 0%, rgba(37,38,41,.6) 58%, rgba(37,38,41,.3) 100%);
+  }
+}
+@media (max-width: 780px){
+  .banner-img{ object-position: 50% 62%; }
+  .hero-banner::before{
+    background: linear-gradient(180deg, rgba(37,38,41,.12) 0%, rgba(37,38,41,.42) 34%, rgba(37,38,41,.78) 62%, rgba(37,38,41,.9) 100%);
+  }
+}
