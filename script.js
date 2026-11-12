@@ -1,3 +1,4 @@
+window.__dlReady = true;
 // Header background swap on scroll
 const header = document.getElementById('site-header');
 const onScroll = () => {
