@@ -624,7 +624,7 @@ ul{ list-style:none; margin:0; padding:0; }
 
 /* ============ Photo crops: desktop first, phones/tablets overridden below ============ */
 .collage .c1 img{ object-position: 50% 24%; }   /* nikah couple, big tile */
-.collage .c2 img{ object-position: 50% 21%; }   /* reception couple, wide tile: keeps both faces */
+.collage .c2 img{ object-position: 50% 9%; }   /* reception couple, wide tile: keeps both faces */
 .collage .c3 img{ object-position: 50% 0%; }    /* food platter: keeps both faces and the hands */
 .collage .c4 img{ object-position: 50% 50%; }   /* event hall */
 @media (max-width: 900px){
