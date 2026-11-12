@@ -121,3 +121,239 @@ tabButtons.forEach(btn => {
     list[next].click();
   });
 });
+
+/* =====================================================================
+   Interactive polish v2
+   ===================================================================== */
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Gallery: every photo that can open in the viewer ---------- */
+  const gallery = [
+    ...document.querySelectorAll('.collage figure img'),
+    ...document.querySelectorAll('.portfolio-tile img')
+  ];
+  const labelFor = (img) => {
+    const tile = img.closest('.portfolio-tile');
+    return tile ? (tile.getAttribute('data-label') || '') : '';
+  };
+
+  /* ---------- Hero headline: words rise in one by one ---------- */
+  const title = document.querySelector('.hero-title');
+  if (title && !reduce) {
+    let i = 0;
+    const frag = document.createDocumentFragment();
+    title.childNodes.forEach((n) => {
+      if (n.nodeType === 3) {
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const s = document.createElement('span');
+          s.className = 'wi';
+          s.style.setProperty('--i', i++);
+          s.textContent = part;
+          frag.appendChild(s);
+        });
+      } else {
+        frag.appendChild(n.cloneNode(true));
+      }
+    });
+    title.replaceChildren(frag);
+  }
+
+  /* ---------- Desktop hero: scrolling photo reel (two columns, opposite directions) ---------- */
+  const collageImgs = Array.from(document.querySelectorAll('.collage figure img'));
+  const hero = document.querySelector('.hero');
+  if (hero && collageImgs.length === 4) {
+    const reel = document.createElement('div');
+    reel.className = 'hero-reel';
+    const makeCol = (indexes, down) => {
+      const col = document.createElement('div');
+      col.className = 'reel-col' + (down ? ' is-down' : '');
+      const track = document.createElement('div');
+      track.className = 'reel-track';
+      [0, 1].forEach((copy) => {
+        indexes.forEach((gi) => {
+          const src = collageImgs[gi];
+          const item = document.createElement('div');
+          item.className = 'reel-item';
+          item.dataset.g = String(gi);
+          const img = document.createElement('img');
+          img.src = src.getAttribute('src');
+          img.width = src.getAttribute('width');
+          img.height = src.getAttribute('height');
+          img.decoding = 'async';
+          if (copy === 0) {
+            img.alt = src.alt;
+            item.tabIndex = 0;
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-label', src.alt);
+          } else {
+            img.alt = '';
+            item.setAttribute('aria-hidden', 'true');
+          }
+          item.appendChild(img);
+          track.appendChild(item);
+        });
+      });
+      col.appendChild(track);
+      return col;
+    };
+    reel.appendChild(makeCol([0, 3], false));
+    reel.appendChild(makeCol([1, 2], true));
+    hero.appendChild(reel);
+
+    // Same scrolling pace in both columns, whatever their height
+    const setPace = () => {
+      reel.querySelectorAll('.reel-track').forEach((tr) => {
+        const half = tr.scrollHeight / 2;
+        if (half > 0) tr.style.setProperty('--dur', Math.max(24, half / 24) + 's');
+      });
+    };
+    setPace();
+    window.addEventListener('load', setPace);
+    let rt;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(setPace, 250); });
+  }
+
+  /* ---------- Photo viewer ---------- */
+  let lb, lbImg, lbCap, lbDots, current = 0, opener = null;
+  const chev = (d) => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + d + '"/></svg>';
+
+  function buildViewer() {
+    lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Photo viewer');
+    lb.innerHTML =
+      '<button class="lb-btn lb-close" type="button" aria-label="Close">' + chev('M6 6l12 12M18 6L6 18') + '</button>' +
+      '<button class="lb-btn lb-prev" type="button" aria-label="Previous photo">' + chev('M15 5l-7 7 7 7') + '</button>' +
+      '<figure class="lb-fig"><img alt=""><figcaption></figcaption></figure>' +
+      '<button class="lb-btn lb-next" type="button" aria-label="Next photo">' + chev('M9 5l7 7-7 7') + '</button>' +
+      '<div class="lb-dots" aria-hidden="true"></div>';
+    document.body.appendChild(lb);
+    lbImg = lb.querySelector('.lb-fig img');
+    lbCap = lb.querySelector('figcaption');
+    lbDots = lb.querySelector('.lb-dots');
+    gallery.forEach(() => lbDots.appendChild(document.createElement('i')));
+
+    lb.querySelector('.lb-close').addEventListener('click', closeViewer);
+    lb.querySelector('.lb-prev').addEventListener('click', () => go(-1));
+    lb.querySelector('.lb-next').addEventListener('click', () => go(1));
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeViewer(); });
+
+    // swipe
+    let sx = null;
+    lb.addEventListener('pointerdown', (e) => { sx = e.clientX; });
+    lb.addEventListener('pointerup', (e) => {
+      if (sx === null) return;
+      const dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+    });
+    lb.addEventListener('pointercancel', () => { sx = null; });
+  }
+
+  function show(i, instant) {
+    current = (i + gallery.length) % gallery.length;
+    const src = gallery[current];
+    const apply = () => {
+      lbImg.src = src.currentSrc || src.src;
+      lbImg.alt = src.alt;
+      lbCap.textContent = labelFor(src);
+      Array.from(lbDots.children).forEach((d, k) => d.classList.toggle('on', k === current));
+      lb.classList.remove('swap');
+    };
+    if (instant) { apply(); return; }
+    lb.classList.add('swap');
+    setTimeout(apply, 150);
+    // warm the neighbours
+    [1, -1].forEach((d) => { const n = gallery[(current + d + gallery.length) % gallery.length]; new Image().src = n.currentSrc || n.src; });
+  }
+  function go(d) { show(current + d); }
+
+  function openViewer(i, from) {
+    if (!lb) buildViewer();
+    opener = from || null;
+    show(i, true);
+    document.body.classList.add('lb-lock');
+    requestAnimationFrame(() => {
+      lb.classList.add('open');
+      lb.querySelector('.lb-close').focus({ preventScroll: true });
+    });
+  }
+  function closeViewer() {
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.classList.remove('lb-lock');
+    if (opener && opener.focus) opener.focus({ preventScroll: true });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (!lb || !lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeViewer();
+    else if (e.key === 'ArrowRight') go(1);
+    else if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'Tab') {
+      const f = Array.from(lb.querySelectorAll('button'));
+      const idx = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(idx + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    }
+  });
+
+  // Hook up: hero photos (phone/tablet grid), the desktop reel, and the work tiles
+  collageImgs.forEach((img) => img.addEventListener('click', () => openViewer(gallery.indexOf(img), img)));
+  document.addEventListener('click', (e) => {
+    const item = e.target.closest && e.target.closest('.reel-item');
+    if (item) openViewer(Number(item.dataset.g), item);
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.classList.contains('reel-item')) {
+      e.preventDefault();
+      openViewer(Number(document.activeElement.dataset.g), document.activeElement);
+    }
+  });
+
+  const zoomSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+  document.querySelectorAll('.portfolio-tile').forEach((tile) => {
+    const img = tile.querySelector('img');
+    if (!img) return;
+    tile.tabIndex = 0;
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', tile.getAttribute('data-label') || img.alt);
+    const z = document.createElement('span');
+    z.className = 'tile-zoom';
+    z.innerHTML = zoomSvg;
+    tile.appendChild(z);
+    const open = () => openViewer(gallery.indexOf(img), tile);
+    tile.addEventListener('click', open);
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+
+    // tilt toward the pointer (mouse only)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+      tile.addEventListener('pointermove', (e) => {
+        const r = tile.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        tile.style.setProperty('--ry', (x * 9).toFixed(2) + 'deg');
+        tile.style.setProperty('--rx', (-y * 9).toFixed(2) + 'deg');
+      });
+      tile.addEventListener('pointerleave', () => {
+        tile.style.setProperty('--rx', '0deg');
+        tile.style.setProperty('--ry', '0deg');
+      });
+    }
+  });
+
+  /* ---------- Contact: light follows the pointer ---------- */
+  const contact = document.querySelector('.contact');
+  if (contact && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    contact.addEventListener('pointermove', (e) => {
+      const r = contact.getBoundingClientRect();
+      contact.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      contact.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  }
+})();
