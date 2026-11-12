@@ -4,8 +4,16 @@ const onScroll = () => {
   if (window.scrollY > 40) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 };
-window.addEventListener('scroll', onScroll);
+const bar = document.getElementById('scrollProgress');
+const onProgress = () => {
+  if (!bar) return;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ')';
+};
+window.addEventListener('scroll', () => { onScroll(); onProgress(); }, { passive: true });
+window.addEventListener('resize', onProgress);
 onScroll();
+onProgress();
 
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
