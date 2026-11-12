@@ -913,3 +913,6 @@ body.lb-lock{ overflow:hidden; }
     background: linear-gradient(180deg, rgba(37,38,41,.12) 0%, rgba(37,38,41,.42) 34%, rgba(37,38,41,.78) 62%, rgba(37,38,41,.9) 100%);
   }
 }
+
+/* Work intro: a little wider and evenly balanced so it doesn't leave one word alone on a line */
+.portfolio .section-lede{ max-width: 64ch; text-wrap: balance; }
