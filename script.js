@@ -81,7 +81,7 @@ if (form) {
         headers: { Accept: 'application/json' }
       });
       if (res.ok) {
-        note.textContent = 'Thanks — your project details are in. We\'ll be in touch soon.';
+        note.textContent = 'Thanks, your project details are in. We\'ll be in touch soon.';
         form.reset();
       } else {
         note.textContent = 'Something went wrong. Please try again or reach out on Instagram.';
@@ -357,4 +357,43 @@ tabButtons.forEach(btn => {
       contact.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   }
+})();
+
+/* Testimonials: seamless, continuous slider (pauses on hover, focus or touch) */
+(function () {
+  const mq = document.querySelector('.t-marquee');
+  const track = document.querySelector('.t-track');
+  if (!mq || !track) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const base = Array.from(track.children);
+  const addSet = () => base.forEach((c) => {
+    const k = c.cloneNode(true);
+    k.setAttribute('aria-hidden', 'true');
+    k.querySelectorAll('img').forEach((im) => { im.alt = ''; });
+    track.appendChild(k);
+  });
+  addSet();
+  const layout = () => {
+    // one "set" = the original cards; keep enough copies so there is never a gap, even on very wide screens
+    const setW = track.children[base.length].offsetLeft - track.children[0].offsetLeft;
+    if (setW <= 0) return;
+    let copies = Math.round(track.scrollWidth / setW);
+    while (setW * (copies - 1) < mq.clientWidth + 40) { addSet(); copies++; }
+    track.style.setProperty('--t-shift', (-setW) + 'px');
+    track.style.setProperty('--t-dur', Math.max(24, setW / 42) + 's');
+  };
+  track.classList.add('is-looping');
+  layout();
+  window.addEventListener('load', layout);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 200); });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) layout(); }, { threshold: 0.05 });
+    io.observe(mq);
+  }
+  let tp;
+  mq.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { mq.classList.add('is-paused'); clearTimeout(tp); } });
+  const resume = (e) => { if (e.pointerType !== 'mouse') { clearTimeout(tp); tp = setTimeout(() => mq.classList.remove('is-paused'), 1800); } };
+  mq.addEventListener('pointerup', resume);
+  mq.addEventListener('pointercancel', resume);
 })();
