@@ -1074,3 +1074,13 @@ body.lb-lock{ overflow:hidden; }
   .t-card, .t-card::before, .t-card::after, .t-avatar, .testimonials::before, .testimonials::after{ animation:none !important; }
   .t-card{ transform:none; opacity:1; }
 }
+
+/* About: "Our Promise" block */
+.about-promise{
+  margin-top: 30px; padding-left: 20px; border-left: 3px solid var(--gold, #B0000A);
+}
+.promise-title{
+  margin: 0 0 10px; font-family: var(--font-body, "Montserrat", sans-serif); font-weight: 700;
+  font-size: 1.3rem; line-height: 1.2; letter-spacing: 0.01em; color: var(--ink, #252629);
+}
+.about-promise p{ margin: 0; }
