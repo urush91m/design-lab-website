@@ -359,7 +359,7 @@ tabButtons.forEach(btn => {
   }
 })();
 
-/* Testimonials: seamless, continuous slider (pauses on hover, focus or touch) */
+/* Testimonials: seamless, continuous slider with a soft spotlight on the card nearest the centre */
 (function () {
   const mq = document.querySelector('.t-marquee');
   const track = document.querySelector('.t-track');
@@ -374,23 +374,42 @@ tabButtons.forEach(btn => {
   });
   addSet();
   const layout = () => {
-    // one "set" = the original cards; keep enough copies so there is never a gap, even on very wide screens
     const setW = track.children[base.length].offsetLeft - track.children[0].offsetLeft;
     if (setW <= 0) return;
     let copies = Math.round(track.scrollWidth / setW);
     while (setW * (copies - 1) < mq.clientWidth + 40) { addSet(); copies++; }
     track.style.setProperty('--t-shift', (-setW) + 'px');
-    track.style.setProperty('--t-dur', Math.max(24, setW / 42) + 's');
+    track.style.setProperty('--t-dur', Math.max(26, setW / 38) + 's');
   };
   track.classList.add('is-looping');
+  mq.classList.add('is-live');
   layout();
   window.addEventListener('load', layout);
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 200); });
+
+  // spotlight: cards near the middle grow and brighten, the rest soften
+  let raf = 0, visible = false;
+  const tick = () => {
+    const r = mq.getBoundingClientRect();
+    const cx = r.left + r.width / 2, span = r.width * 0.62;
+    const cards = track.children;
+    for (let i = 0; i < cards.length; i++) {
+      const b = cards[i].getBoundingClientRect();
+      const d = Math.abs(b.left + b.width / 2 - cx) / span;
+      cards[i].style.setProperty('--f', (1 - Math.min(1, d)).toFixed(3));
+    }
+    raf = requestAnimationFrame(tick);
+  };
   if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) layout(); }, { threshold: 0.05 });
+    const io = new IntersectionObserver((es) => {
+      visible = es.some((e) => e.isIntersecting);
+      if (visible) { layout(); if (!raf) raf = requestAnimationFrame(tick); }
+      else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    }, { threshold: 0.02 });
     io.observe(mq);
-  }
+  } else { raf = requestAnimationFrame(tick); }
+
   let tp;
   mq.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { mq.classList.add('is-paused'); clearTimeout(tp); } });
   const resume = (e) => { if (e.pointerType !== 'mouse') { clearTimeout(tp); tp = setTimeout(() => mq.classList.remove('is-paused'), 1800); } };
