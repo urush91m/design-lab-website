@@ -1095,3 +1095,32 @@ body.lb-lock{ overflow:hidden; }
   .t-track.is-static .t-card{ flex-basis: 100%; }
   .t-track.is-static .t-quote{ font-size: 1rem; }
 }
+
+/* ---- Testimonials: entrance, tilt toward the cursor, name underline that follows the spotlight ---- */
+@keyframes card-in{
+  from{ opacity:0; translate: 0 64px; rotate: 1.6deg; }
+  to  { opacity:1; translate: 0 0;   rotate: 0deg; }
+}
+.t-marquee.is-pending .t-card{ opacity:0; }
+.t-marquee.in-view .t-card{ animation: card-in 1s cubic-bezier(.2,.7,.2,1) backwards; }
+.t-marquee.in-view .t-card:nth-child(6n+1){ animation-delay:.05s; }
+.t-marquee.in-view .t-card:nth-child(6n+2){ animation-delay:.16s; }
+.t-marquee.in-view .t-card:nth-child(6n+3){ animation-delay:.27s; }
+.t-marquee.in-view .t-card:nth-child(6n+4){ animation-delay:.38s; }
+.t-marquee.in-view .t-card:nth-child(6n+5){ animation-delay:.49s; }
+.t-marquee.in-view .t-card:nth-child(6n+6){ animation-delay:.60s; }
+.t-card{ transition: translate .45s cubic-bezier(.2,.7,.2,1), border-color .4s ease, transform .16s ease-out; }
+@media (hover:hover) and (pointer:fine){
+  .t-card:hover{
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(calc(0.92 + 0.08 * var(--f)));
+  }
+}
+.t-name{ position:relative; align-self:flex-start; }
+.t-name::after{
+  content:''; position:absolute; left:0; bottom:-4px; height:2px; border-radius:2px;
+  width: calc(100% * var(--f, 1)); background: linear-gradient(90deg, var(--champagne, #D8B77A), var(--gold, #B0000A));
+}
+@media (prefers-reduced-motion: reduce){
+  .t-marquee.in-view .t-card{ animation:none; }
+  .t-marquee.is-pending .t-card{ opacity:1; }
+}
