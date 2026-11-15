@@ -17,11 +17,11 @@ window.setTimeout(function () {
 </script>
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="logo.png?v=20261130">
+<link rel="icon" href="logo.png?v=20261201">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261130">
+<link rel="stylesheet" href="styles.css?v=20261201">
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -34,7 +34,7 @@ window.setTimeout(function () {
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a href="#top" class="wordmark"><img src="logo.png?v=20261130" alt="The Design Lab.inn" class="logo-img"></a>
+    <a href="#top" class="wordmark"><img src="logo.png?v=20261201" alt="The Design Lab.inn" class="logo-img"></a>
     <nav class="main-nav">
       <a href="#about">About</a>
       <a href="#services">Services</a>
@@ -205,15 +205,50 @@ window.setTimeout(function () {
       <h2 class="reveal">Here’s What Our Clients Have to Say</h2>
     </div>
     <div class="t-marquee reveal" role="region" aria-label="Client testimonials">
-      <!-- With three or more cards the slider starts moving by itself. With fewer, the card stays centred.
-           To add a card, copy a whole <figure class="t-card"> block below, and remove class="is-static"
-           from the .t-track div once there are three or more. Only add real reviews. -->
-      <div class="t-track is-static">
+      <!-- With three or more cards the slider moves by itself. To add a card, copy a whole <figure class="t-card"> block below.
+           If there are ever fewer than three cards, add class="is-static" to the .t-track div so the card stays centred.
+           Only add real reviews from clients who agreed to be quoted. -->
+      <div class="t-track">
         <figure class="t-card">
           <blockquote class="t-quote">Design Lab team is just fantastic to work with, and they are super responsive! They took care of my wedding photography and videography, and let me tell you, the photos and videos turned out absolutely perfect. Working with them was such a pleasure, and I can’t wait for more collaborations in the future!</blockquote>
           <figcaption class="t-person">
             <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
             <span class="t-who"><strong class="t-name">Shahbaz</strong><span class="t-role">Delhi</span></span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <blockquote class="t-quote">Had a really nice experience with them. I was a little nervous about getting photographed, but everyone was so friendly. The pictures came out really good. My family loved them too!</blockquote>
+          <figcaption class="t-person">
+            <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
+            <span class="t-who"><strong class="t-name">Aarushi Malhotra</strong><span class="t-role">Delhi</span></span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <blockquote class="t-quote">Honestly, I didn’t expect the pictures to turn out this nice. They captured so many small moments, especially the candid ones. Bas, photos dekh ke poora din yaad aa gaya.</blockquote>
+          <figcaption class="t-person">
+            <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
+            <span class="t-who"><strong class="t-name">Zoya Farooqui</strong><span class="t-role">Jamia Nagar, Delhi</span></span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <blockquote class="t-quote">I kept saying I’m not good at posing, but they kept telling me to just be myself 😂 The pictures actually look like me, not those typical forced poses. Really happy with the work.</blockquote>
+          <figcaption class="t-person">
+            <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
+            <span class="t-who"><strong class="t-name">Myraanshi Kapoor</strong><span class="t-role">Gurugram</span></span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <blockquote class="t-quote">Very good experience overall. Everything was managed properly and the team was polite throughout. Also, got the photos on time, which was a big plus. Would definitely consider them again.</blockquote>
+          <figcaption class="t-person">
+            <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
+            <span class="t-who"><strong class="t-name">Rayyan Siddiqui</strong><span class="t-role">Noida</span></span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <blockquote class="t-quote">I’ve gone through the pictures at least ten times now. Some are so natural that I didn’t even realise someone was taking them. Really glad I chose them for this.</blockquote>
+          <figcaption class="t-person">
+            <span class="t-avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.6-4.6 4-7.2 8.2-7.2s7.6 2.6 8.2 7.2z"/></svg></span>
+            <span class="t-who"><strong class="t-name">Kiara Bhatia</strong><span class="t-role">South Delhi</span></span>
           </figcaption>
         </figure>
       </div>
@@ -275,6 +310,6 @@ window.setTimeout(function () {
   <a class="fc-call" href="tel:+919709299285" aria-label="Call Design Lab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></a>
 </div>
 
-<script src="script.js?v=20261130"></script>
+<script src="script.js?v=20261201"></script>
 </body>
 </html>
