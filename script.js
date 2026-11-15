@@ -417,3 +417,35 @@ tabButtons.forEach(btn => {
   mq.addEventListener('pointerup', resume);
   mq.addEventListener('pointercancel', resume);
 })();
+
+/* Testimonials: cards rise in one after another the first time the section is seen, and tilt toward the cursor */
+(function () {
+  const mq = document.querySelector('.t-marquee');
+  if (!mq) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    mq.classList.add('is-pending');
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) {
+        mq.classList.add('in-view');
+        requestAnimationFrame(() => mq.classList.remove('is-pending'));
+        io.disconnect();
+      }
+    }, { threshold: 0.15 });
+    io.observe(mq);
+  }
+  if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    mq.addEventListener('pointermove', (e) => {
+      const card = e.target.closest && e.target.closest('.t-card');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+    });
+    mq.addEventListener('pointerout', (e) => {
+      const card = e.target.closest && e.target.closest('.t-card');
+      if (card) { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); }
+    });
+  }
+})();
