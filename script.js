@@ -365,6 +365,7 @@ tabButtons.forEach(btn => {
   const track = document.querySelector('.t-track');
   if (!mq || !track) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (track.classList.contains('is-static')) return;
   const base = Array.from(track.children);
   const addSet = () => base.forEach((c) => {
     const k = c.cloneNode(true);
