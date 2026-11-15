@@ -1084,3 +1084,14 @@ body.lb-lock{ overflow:hidden; }
   font-size: 1.3rem; line-height: 1.2; letter-spacing: 0.01em; color: var(--ink, #252629);
 }
 .about-promise p{ margin: 0; }
+
+/* Testimonials with fewer than three cards: one centred card, no sliding */
+.t-track.is-static{ width:100%; justify-content:center; padding: 0 24px; box-sizing:border-box; animation:none; }
+.t-track.is-static .t-card{ flex: 0 1 660px; margin: 0; }
+.t-track.is-static .t-quote{ font-size: 1.08rem; }
+.t-marquee:has(.t-track.is-static){ -webkit-mask-image:none; mask-image:none; overflow:hidden; }
+@media (max-width: 640px){
+  .t-track.is-static{ padding: 0 16px; }
+  .t-track.is-static .t-card{ flex-basis: 100%; }
+  .t-track.is-static .t-quote{ font-size: 1rem; }
+}
