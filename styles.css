@@ -1124,3 +1124,11 @@ body.lb-lock{ overflow:hidden; }
   .t-marquee.in-view .t-card{ animation:none; }
   .t-marquee.is-pending .t-card{ opacity:1; }
 }
+
+/* Services: Albums note */
+.service-note{
+  margin: 0; padding: 34px 30px; text-align: center;
+  font-family: var(--font-display, "Cormorant Garamond", Georgia, serif); font-style: italic; font-weight: 600;
+  font-size: 1.7rem; line-height: 1.55; color: var(--ink, #252629);
+}
+@media (max-width: 640px){ .service-note{ font-size: 1.4rem; padding: 28px 22px; } }
