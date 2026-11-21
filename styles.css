@@ -1132,3 +1132,7 @@ body.lb-lock{ overflow:hidden; }
   font-size: 1.7rem; line-height: 1.55; color: var(--ink, #252629);
 }
 @media (max-width: 640px){ .service-note{ font-size: 1.4rem; padding: 28px 22px; } }
+
+/* Header: constant height, so the page never jumps when you start scrolling */
+.site-header.scrolled .header-inner{ height: 76px; }
+.site-header.scrolled .logo-img{ height: 42px; }
